@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Image,Carousel } from 'react-bootstrap';
+import { Carousel } from 'react-bootstrap';
 class Carouseldiv extends Component{
     render(){
         return(

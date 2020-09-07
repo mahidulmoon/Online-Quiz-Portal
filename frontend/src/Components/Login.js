@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Form,Container,Button,Col } from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
-import axios from 'axios';
+
 class Login extends Component {
     state = {
         login:{

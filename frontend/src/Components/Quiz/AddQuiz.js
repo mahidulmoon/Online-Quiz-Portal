@@ -2,6 +2,19 @@ import React, { Component } from 'react';
 import { Form,Container,Button,Col,Row } from 'react-bootstrap';
 
 class AddQuiz extends Component {
+    state = {
+        addquiz:{
+            quizcode: this.props.code , question: '',option1:'',option2:'',option3:'',option4:'',answer:'',quiztype:''
+        }
+    }
+    inputChange = e =>{
+        const cred = this.state.addquiz;
+        cred[ e.target.name ] = e.target.value;
+        this.setState({ addquiz:cred });
+    }
+    addButton = e =>{
+        console.log(this.state.addquiz);
+    }
     
     render() {
         
@@ -17,44 +30,61 @@ class AddQuiz extends Component {
                 <Form>
                 <Form.Group controlId="formGridAddress1">
                         <Form.Label>Question:</Form.Label>
-                        <Form.Control placeholder="Question" disabled />
+                        <Form.Control placeholder="Question" name="question" value={this.state.addquiz.question} onChange={this.inputChange}  />
                     </Form.Group>
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridEmail">
-                        <Form.Check type="checkbox" label="Option1" />
-                        <Form.Control type="email" placeholder="Option1" />
+                        
+                        <Form.Control type="text" name="option1" value={this.state.addquiz.option1} onChange={this.inputChange} placeholder="Option1" />
                         
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridPassword">
-                        <Form.Check type="checkbox" label="Option2" />
-                        <Form.Control type="email" placeholder="Option2" />
+                        
+                        <Form.Control type="text" placeholder="Option2" name="option2" value={this.state.addquiz.option2} onChange={this.inputChange} />
                         
                         </Form.Group>
                     </Form.Row>
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridEmail">
-                        <Form.Check type="checkbox" label="Option3" />
-                        <Form.Control type="email" placeholder="Option3" />
+                        
+                        <Form.Control type="text" placeholder="Option3" name="option3" value={this.state.addquiz.option3} onChange={this.inputChange} />
                         
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridPassword">
-                        <Form.Check type="checkbox" label="Option4" />
-                        <Form.Control type="email" placeholder="Option4" />
+                        
+                        <Form.Control type="text" placeholder="Option4" name="option4" value={this.state.addquiz.option4} onChange={this.inputChange} />
                         
                         </Form.Group>
                     </Form.Row>
+                    <Form.Group controlId="formGridAddress1">
+                        <Form.Label>Answer:</Form.Label>
+                        <Form.Control placeholder="Answer" name="answer" value={this.state.addquiz.answer} onChange={this.inputChange}  />
+                    </Form.Group>
+                    <Form.Control
+                            as="select"
+                            className="my-1 mr-sm-2"
+                            id="inlineFormCustomSelectPref"
+                            name="quiztype"
+                            onChange={this.inputChange}
+                            custom
+                        >
+                            <option value="0">Choose Complaint Type...</option>
+                            <option value="mcq">MCQ</option>
+                            <option value="writeontextbox">Write on TextBox</option>
+                            <option value="fileupload">File Upload</option>
+                            
+                    </Form.Control>
+                    <br/>
 
                     
                     
 
                 <Row>
+                    
                     <Col>
-                        <Button variant="primary">Submit</Button>
-                    </Col>
-                    <Col>
-                        <Button variant="success">Add</Button>
+                        <Button variant="success" onClick={this.addButton}>Add</Button>
                     </Col>
                 </Row>   
 
