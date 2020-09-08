@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form,Col,Button,Container } from 'react-bootstrap';
-
+import axios from 'axios';
 class Registration extends Component {
     state = {
         register: {
@@ -19,7 +19,8 @@ class Registration extends Component {
         if(this.state.register.username ==='' || this.state.register.password ==='' || this.state.register.email ==='' || this.state.register.first_name ==='' || this.state.register.last_name ==='' ){
             alert("Please check your Inputs");
         }else{
-            console.log(this.state.register);
+            //console.log(this.state.register);
+            axios.post('http://127.0.0.1:8000/user/registration/',this.state.register).then(res => alert("Registration Successfull")).catch(err => alert("Please Input valid information"));
             
         }
     }
