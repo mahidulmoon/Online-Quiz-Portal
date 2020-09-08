@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Form,Container,Button,Col } from 'react-bootstrap';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 class Login extends Component {
     state = {
         login:{
             username:'',password:''
         },
         token: [],
+        islogin: false
         
     }
     inputchange = e =>{
@@ -20,11 +22,14 @@ class Login extends Component {
             alert("Input valid username and password");
         }else{
             //console.log(this.state.login);
-            axios.post('http://127.0.0.1:8000/user/authenticate/',this.state.login).then(res=> {this.setState({token:res.data});alert('Login Successfull')}).catch(err => alert("Please input valid username password"));
+            axios.post('http://127.0.0.1:8000/user/authenticate/',this.state.login).then(res=> {localStorage.setItem('uid',res.data.id);localStorage.setItem('token',res.data.token);alert('Login Successfull');this.setState({islogin:true})}).catch(err => alert("Please input valid username password"));
             
         }
     }
     render() {
+        if(this.state.islogin){
+            return <Redirect to='/quiz' />
+        }
         
         return (
             <Container>

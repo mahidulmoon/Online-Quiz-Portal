@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form,Container,Button,Col,Row } from 'react-bootstrap';
-
+import axios from 'axios';
 class AddQuiz extends Component {
     state = {
         addquiz:{
@@ -13,7 +13,13 @@ class AddQuiz extends Component {
         this.setState({ addquiz:cred });
     }
     addButton = e =>{
-        console.log(this.state.addquiz);
+        //console.log(this.state.addquiz);
+        axios.post('http://127.0.0.1:8000/quiz/addquizquestion/',this.state.addquiz,{
+            headers:{
+                'Authorization': `Token ${localStorage.getItem('token')}`,
+            }
+        }).then(res => alert("Question added")).catch(err=> alert(err));
+
     }
     
     render() {

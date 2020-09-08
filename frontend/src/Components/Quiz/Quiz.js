@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Container,Form,Button,Col,Row } from 'react-bootstrap';
 import AddQuiz from './AddQuiz';
 import GiveQuiz from './GiveQuiz';
+import axios from 'axios';
 class Quiz extends Component {
     state={
         createquiz:{
-            quizcode:'',user:'',topic:'',time:''
+            quizcode:'',user:parseInt(localStorage.getItem('uid')),topic:'',time:''
         },
         showdiv: false,
         isadmin: false,
@@ -15,6 +16,11 @@ class Quiz extends Component {
             { question:'what is the capital of Bangladesh',option1:'',option2:'',option3:'',option4:'',answer:'',quiztype:'writeontextbox' },
             { question:'what is the capital of india',option1:'',option2:'',option3:'',option4:'',answer:'',quiztype:'fileupload' }
         ]
+    }
+    componentDidMount(){
+        if(localStorage.getItem('token')){
+            this.setState({isadmin:true});
+        }
     }
     inputChangecreatequiz = e =>{
         const cred = this.state.createquiz;
@@ -27,10 +33,23 @@ class Quiz extends Component {
             alert('Please insert a code first');
         }else{
             this.setState({showdiv:!this.state.showdiv});
-            console.log(this.state.createquiz);
+            
         }
     }
-    
+    generatebuttonclick=()=>{
+        if(this.state.createquiz.quizcode === ''){
+            alert('Please insert a code first');
+        }else{
+            
+            axios.post('http://127.0.0.1:8000/quiz/quizinfo/',this.state.createquiz,{
+                headers:{
+                    'Authorization': `Token ${localStorage.getItem('token')}`,
+                }
+            }).then(res => {alert("Quiz Room Created");this.setState({showdiv:!this.state.showdiv});}).catch(err => alert(err));
+            
+            //console.log(this.state.createquiz);
+        }
+    }
     
     render() {
         
@@ -62,8 +81,8 @@ class Quiz extends Component {
                         </Row>
                         }
                         <br/>
-                        {this.state.isadmin && <Button variant="primary" onClick={this.buttonclick}>Generate</Button> }
-                        <Button variant="success" onClick={this.buttonclick}>Give Quiz</Button>
+                        {this.state.isadmin && <Button variant="primary" onClick={this.generatebuttonclick}>Generate</Button> }
+                        {!this.state.isadmin && <Button variant="success" onClick={this.buttonclick}>Give Quiz</Button>}
                     </Form.Group>
                     {this.state.showdiv && this.state.isadmin && <AddQuiz code={this.state.createquiz.quizcode} />}
                     {this.state.showdiv && !this.state.isadmin && <GiveQuiz question={this.state.getquestion} />}
