@@ -42,7 +42,13 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'quiz',
+    'django_filters',
 ]
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+# }
+
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
 

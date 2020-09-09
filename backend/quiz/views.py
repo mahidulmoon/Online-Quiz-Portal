@@ -4,7 +4,12 @@ from .models import QuizInfo,AddNewQuizQuestion
 from .serializers import QuizInforSerializer,AddQuizQuestionSerializer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-# Create your views here.
+from rest_framework.decorators import api_view
+from django_filters import rest_framework as filters
+from rest_framework.response import Response
+from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 
 class QuizInfoViewSet(viewsets.ModelViewSet):
@@ -21,3 +26,11 @@ class AddQuizQuestionViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, )
 
     
+
+
+class GetQuizFilter(viewsets.ModelViewSet):
+    queryset = AddNewQuizQuestion.objects.all()
+    serializer_class = AddQuizQuestionSerializer
+    filter_backends = (DjangoFilterBackend,SearchFilter)
+    filter_fields = ('id','quizcode')
+    search_fields = ('id','quizcode')
