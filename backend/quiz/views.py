@@ -17,6 +17,8 @@ class QuizInfoViewSet(viewsets.ModelViewSet):
     serializer_class = QuizInforSerializer
     authentication_classes = (TokenAuthentication, )
     permission_classes = (IsAuthenticated, )
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('id','quizcode')
 
 
 class AddQuizQuestionViewSet(viewsets.ModelViewSet):

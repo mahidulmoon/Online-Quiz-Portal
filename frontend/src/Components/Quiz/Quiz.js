@@ -11,11 +11,12 @@ class Quiz extends Component {
         showdiv: false,
         isadmin: false,
         getquestion:[
-            { question:'what is the sum of 5 and 3',option1:'3',option2:'5',option3:'7',option4:'8',answer:'8',quiztype:'mcq' },
-            { question:'what is the capital of Bangladesh',option1:'chittagong',option2:'dhaka',option3:'khulna',option4:'barishal',answer:'dhaka',quiztype:'mcq' },
-            { question:'what is the capital of Bangladesh',option1:'',option2:'',option3:'',option4:'',answer:'',quiztype:'writeontextbox' },
-            { question:'what is the capital of india',option1:'',option2:'',option3:'',option4:'',answer:'',quiztype:'fileupload' }
-        ]
+        //     { question:'what is the sum of 5 and 3',option1:'3',option2:'5',option3:'7',option4:'8',answer:'8',quiztype:'mcq' },
+        //     { question:'what is the capital of Bangladesh',option1:'chittagong',option2:'dhaka',option3:'khulna',option4:'barishal',answer:'dhaka',quiztype:'mcq' },
+        //     { question:'what is the capital of Bangladesh',option1:'',option2:'',option3:'',option4:'',answer:'',quiztype:'writeontextbox' },
+        //     { question:'what is the capital of india',option1:'',option2:'',option3:'',option4:'',answer:'',quiztype:'fileupload' }
+        ],
+        time:'',
     }
     componentDidMount(){
         if(localStorage.getItem('token')){
@@ -32,6 +33,12 @@ class Quiz extends Component {
         if(this.state.createquiz.quizcode === ''){
             alert('Please insert a code first');
         }else{
+            axios.get(`http://127.0.0.1:8000/quiz/getquizquestion/?search=${this.state.createquiz.quizcode}`).then(res => this.setState({getquestion:res.data}));
+            // axios.get(`http://127.0.0.1:8000/quiz/quizinfo/?id=&quizcode=${this.state.createquiz.quizcode}`,this.state.createquiz.quizcode,{
+            //     headers:{
+            //         'Authorization' : 'Token e34d83312edaf24a1521e83b11f5e168775bfb6f',
+            //     }
+            // }).then(res=> this.setState({time:res.data.time}));
             this.setState({showdiv:!this.state.showdiv});
             
         }
@@ -85,7 +92,7 @@ class Quiz extends Component {
                         {!this.state.isadmin && <Button variant="success" onClick={this.buttonclick}>Give Quiz</Button>}
                     </Form.Group>
                     {this.state.showdiv && this.state.isadmin && <AddQuiz code={this.state.createquiz.quizcode} />}
-                    {this.state.showdiv && !this.state.isadmin && <GiveQuiz question={this.state.getquestion} />}
+                    {this.state.showdiv && !this.state.isadmin && <GiveQuiz question={this.state.getquestion} time={this.state.time} />}
                 </React.Fragment>
             </Container>
         );
