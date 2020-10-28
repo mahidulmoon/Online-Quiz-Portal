@@ -39,7 +39,7 @@ class GiveQuiz extends Component {
                 <React.Fragment>
                 <Modal show={this.state.show} onHide={this.handleClose}>
                     <Modal.Header closeButton>
-                    <Modal.Title>Complainer Details</Modal.Title>
+                    <Modal.Title>Student Info</Modal.Title>
                     </Modal.Header>
                     <Modal.Body><Form>
                         <Form.Group controlId="formGroupEmail">
